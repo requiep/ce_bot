@@ -15,11 +15,11 @@ class admin(commands.Cog):
         self.bot = bot
        
     @discord.app_commands.command(name="clear", description="clears the number of messages") 
-    @discord.app_commands.describe(amount="how many messages to clear")
-    @commands.has_role("Модератор")    
+    @discord.app_commands.describe(amount="how many messages to clear")   
     async def clear(self, interaction: discord.Interaction, amount: int) -> None:
         try:
-            if amount:
+            role = discord.utils.get(interaction.user.roles, name="Модератор")
+            if amount and role:
                 embed = discord.Embed(
                     title=f'Chat cleared',
                     description=f'You cleared the chat for {amount} messages',
@@ -39,10 +39,10 @@ class admin(commands.Cog):
     @discord.app_commands.command(name="kick", description="kicks the user out of the discord server") 
     @discord.app_commands.describe(member="user to be kicked")
     @discord.app_commands.describe(reason="reason for kick a user")
-    @commands.has_role("Модератор")
     async def kick(self, interaction: discord.Interaction, member : discord.Member, *, reason: str) -> None:
         try:
-            if member and reason:
+            role = discord.utils.get(interaction.user.roles, name="Модератор")
+            if member and reason and role:
                 await member.kick(reason=reason)
                 embed = discord.Embed(
                     title=f'{member.name} has been kicked',
@@ -62,10 +62,10 @@ class admin(commands.Cog):
     @discord.app_commands.command(name="ban", description="blocks the user on the server") 
     @discord.app_commands.describe(member="user to be blocked")
     @discord.app_commands.describe(reason="reason for blocking a user")
-    @commands.has_role("Модератор")
     async def ban(self, interaction: discord.Interaction, member : discord.Member, *, reason: str) -> None:
         try:
-            if member and reason:
+            role = discord.utils.get(interaction.user.roles, name="Модератор")
+            if member and reason and role:
                 await member.ban(reason=reason)
                 embed = discord.Embed(
                     title=f'{member.name} has been banned',

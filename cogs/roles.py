@@ -17,10 +17,10 @@ class roles(commands.Cog):
     @discord.app_commands.command(name="assignrole", description="allows the user to assign a role") 
     @discord.app_commands.describe(member="user who needs the role")
     @discord.app_commands.describe(role="role to be given")
-    @commands.has_role("Модератор")
     async def assignrole(self, interaction: discord.Interaction, member: discord.Member, role: discord.Role) -> None:
         try:
-            if member and role:
+            role_user = discord.utils.get(interaction.user.roles, name="Модератор")
+            if member and role and role_user:
                 await member.add_roles(role)
                 embed = discord.Embed(
                     title=f'Role Granted',
@@ -40,10 +40,10 @@ class roles(commands.Cog):
     @discord.app_commands.command(name="removerole", description="command that removes a role from a user") 
     @discord.app_commands.describe(member="who needs to take the role")
     @discord.app_commands.describe(role="role to be removed")
-    @commands.has_role("Модератор")
     async def removerole(self, interaction: discord.Interaction, member: discord.Member, role: discord.Role) -> None:
         try:
-            if member and role:
+            role_user = discord.utils.get(interaction.user.roles, name="Модератор")
+            if member and role and role_user:
                 await member.remove_roles(role)
                 embed = discord.Embed(
                     title=f'Role Removed',
@@ -59,7 +59,6 @@ class roles(commands.Cog):
                 await interaction.response.send_message(embed=embed)
         except Exception as e:
             logging.error(f"Errno: on 'removerole' command failed, start again {e}")
-
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(roles(bot))

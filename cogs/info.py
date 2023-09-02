@@ -20,7 +20,7 @@ class info(commands.Cog):
         try:
             embed = discord.Embed(
                 title=f'User information',
-                description=f'username -> {member.name}\nnickname -> {member.nick}\nuser ID -> {member.id}\naccent_color -> {member.accent_color}\nroles -> {", ".join([role.mention for role in member.roles])}',
+                description=f'activity -> {member.activity}\ndisplay name -> {member.display_name}\nusername -> {member.name}\nnickname -> {member.nick}\nuser ID -> {member.id}\naccent_color -> {member.accent_color}\nroles -> {", ".join([role.mention for role in member.roles])}',
                 color=0xffffff)
             embed.set_image(url=member.avatar)
             await interaction.response.send_message(embed=embed)
@@ -45,7 +45,7 @@ class info(commands.Cog):
         try:
             embed = discord.Embed(
                 title=f'CE_bot help',
-                description=f'/py <code> - runs python code and gives answer\n/clear <amount> - command to clear the chat\n/kick <member> <reason> - kicks the user from the server\n/ban <member> <reason> - bans the caller from the server\n/about - gives information about the bot/server\n/assignrole <member> <role> - Assigns a role to an assigner\n/removerole <member> <role> - Removes a role from an assigner',
+                description=f'/userinfo <member> - get member information/py <code> - runs python code and gives answer\n/clear <amount> - command to clear the chat\n/kick <member> <reason> - kicks the user from the server\n/ban <member> <reason> - bans the caller from the server\n/about - gives information about the bot/server\n/assignrole <member> <role> - Assigns a role to an assigner\n/removerole <member> <role> - Removes a role from an assigner',
                 color=0xffffff)
             await interaction.response.send_message(embed=embed)
             await interaction.response.defer()

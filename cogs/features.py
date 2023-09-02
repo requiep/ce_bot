@@ -16,6 +16,9 @@ logging.basicConfig(filename="logs/ce_.log", level=logging.ERROR, format='%(asct
 class features(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
+        self.bot_activity = {
+            "type": "watch",  # play / listen / watch
+            "activity": "spongebob"}
         self.emoji_list = ['chuckling', 'happysundar', 'thankyou', 'carlstrawberry',
                            'plaingun', 'blabbering', 'woah', 'chadglow', 'plaingun',
                            'agony', 'toodumb', 'cooke', 'sadistcrab', 'huhskull',
@@ -39,6 +42,17 @@ class features(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self) -> None:
         print('[*] Bot is running')
+        if self.bot_activity["type"] == "play":
+            await self.bot.change_presence(activity=discord.Game(
+                name=self.bot_activity["activity"]))
+        elif self.bot_activity["type"] == "listen":
+            await self.bot.change_presence(activity=discord.Activity(
+                type=discord.ActivityType.listening,
+                name=self.bot_activity["activity"]))
+        elif self.bot_activity["type"] == "watch":
+            await self.bot.change_presence(activity=discord.Activity(
+                type=discord.ActivityType.watching,
+                name=self.bot_activity["activity"]))
         try:
             synced = await self.bot.tree.sync()
             print(f'[*] Count of commands {len(synced)}')
